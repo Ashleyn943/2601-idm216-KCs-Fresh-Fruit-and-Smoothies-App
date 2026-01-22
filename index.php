@@ -7,5 +7,7 @@
 </head>
 <body>
     <h1>COMING SOON</h1>
+    <p>Test</p>
+    <a href="database.php">Here</a>
 </body>
 </html>
