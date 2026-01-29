@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 22, 2026 at 10:45 PM
+-- Generation Time: Jan 29, 2026 at 09:40 PM
 -- Server version: 10.6.22-MariaDB-0ubuntu0.22.04.1
 -- PHP Version: 8.1.2-1ubuntu2.23
 
@@ -28,19 +28,22 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `idm216_items` (
-  `id` int(10) NOT NULL,
-  `name` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  `id` int(1) NOT NULL,
+  `name` varchar(20) DEFAULT NULL,
+  `s_price` float(2,2) DEFAULT NULL,
+  `m_price` float(2,2) DEFAULT NULL,
+  `l_price` float(2,2) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 --
 -- Dumping data for table `idm216_items`
 --
 
-INSERT INTO `idm216_items` (`id`, `name`) VALUES
-(1, 'Custom Smoothie'),
-(2, 'Custom Fruit Salad'),
-(3, 'P.B. Banana Smoothie'),
-(4, 'Taro Smoothie');
+INSERT INTO `idm216_items` (`id`, `name`, `s_price`, `m_price`, `l_price`) VALUES
+(1, 'Custom Smoothie', 4.00, 5.00, 6.00),
+(2, 'Custom Fruit Salad', 4.00, 0.00, 5.00),
+(3, 'P.B. Banana Smoothie', 4.00, 5.00, 6.00),
+(4, 'Taro Smoothie', 4.50, 5.50, 6.50);
 
 --
 -- Indexes for dumped tables
@@ -60,7 +63,7 @@ ALTER TABLE `idm216_items`
 -- AUTO_INCREMENT for table `idm216_items`
 --
 ALTER TABLE `idm216_items`
-  MODIFY `id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
