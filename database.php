@@ -30,7 +30,7 @@
                 while ($row = mysqli_fetch_row($result)) {
                     echo "<tr>";
                     foreach ($row as $item) {
-                        echo '<td>' . htmlspecialchars($item) . '</td>'; 
+                        echo '<td>' . htmlspecialchars($item ?? '') . '</td>'; 
                     }
                     echo '</tr>';
                 }
@@ -51,7 +51,7 @@
                 while ($row = mysqli_fetch_row($result)) {
                     echo "<tr>";
                     foreach ($row as $item) {
-                        echo '<td>' . htmlspecialchars($item) . '</td>'; 
+                        echo '<td>' . htmlspecialchars($item ?? '') . '</td>'; 
                     }
                     echo '</tr>';
                 }
@@ -72,7 +72,7 @@
                 while ($row = mysqli_fetch_row($result)) {
                     echo "<tr>";
                     foreach ($row as $item) {
-                        echo '<td>' . htmlspecialchars($item) . '</td>'; 
+                        echo '<td>' . htmlspecialchars($item ?? '') . '</td>'; 
                     }
                     echo '</tr>';
                 }

@@ -8,6 +8,7 @@
 <body>
     <h1>COMING SOON</h1>
     <p>Test</p>
-    <a href="database.php">Here</a>
+    <a href="database.php">Database Here</a>
+    <a href="main.php">Main Menu Here</a>
 </body>
 </html>

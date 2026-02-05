@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Jan 29, 2026 at 09:40 PM
+-- Generation Time: Feb 05, 2026 at 02:28 PM
 -- Server version: 10.6.22-MariaDB-0ubuntu0.22.04.1
 -- PHP Version: 8.1.2-1ubuntu2.23
 
@@ -32,18 +32,20 @@ CREATE TABLE `idm216_items` (
   `name` varchar(20) DEFAULT NULL,
   `s_price` float(2,2) DEFAULT NULL,
   `m_price` float(2,2) DEFAULT NULL,
-  `l_price` float(2,2) DEFAULT NULL
+  `l_price` float(2,2) DEFAULT NULL,
+  `fruit_options` text DEFAULT NULL,
+  `add_ons` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_general_ci;
 
 --
 -- Dumping data for table `idm216_items`
 --
 
-INSERT INTO `idm216_items` (`id`, `name`, `s_price`, `m_price`, `l_price`) VALUES
-(1, 'Custom Smoothie', 4.00, 5.00, 6.00),
-(2, 'Custom Fruit Salad', 4.00, 0.00, 5.00),
-(3, 'P.B. Banana Smoothie', 4.00, 5.00, 6.00),
-(4, 'Taro Smoothie', 4.50, 5.50, 6.50);
+INSERT INTO `idm216_items` (`id`, `name`, `s_price`, `m_price`, `l_price`, `fruit_options`, `add_ons`) VALUES
+(1, 'Custom Smoothie', 4.00, 5.00, 6.00, 'banana, mango, mixed berry, pineapple, strawberry, kale, spinich', 'yogurt, whey protein'),
+(2, 'Custom Fruit Salad', 4.00, NULL, 5.00, NULL, NULL),
+(3, 'P.B. Banana Smoothie', 4.00, 5.00, 6.00, NULL, 'yogurt, whey protein'),
+(4, 'Taro Smoothie', 4.50, 5.50, 6.50, NULL, 'yogurt, whey protein');
 
 --
 -- Indexes for dumped tables
