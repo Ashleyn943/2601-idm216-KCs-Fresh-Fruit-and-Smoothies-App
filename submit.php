@@ -15,12 +15,14 @@
             foreach ($_POST['select'] as $size) {
                 $total += floatval($size);
             }
-                $tax = $total * 0.15; //given tax rate of 15%
+                $tax = $total * 0.08; //given tax rate of 8%
                 $total += $tax;
         }
 
         
     ?>
+
+    <a href="main.php">Return to Menu</a>
 
     <h2>Receipt</h2>
         <?php
@@ -36,7 +38,7 @@
                 echo "</ul>";
             }
                 echo "<p>Subtotal: $" . number_format($total - $tax, 2) . "</p>";
-                echo "<p>Tax (15%): $" . number_format($tax, 2) . "</p>";
+                echo "<p>Tax (8%): $" . number_format($tax, 2) . "</p>";
                 echo "<p>Total: $" . number_format($total, 2) . "</p>";
         ?>
 </body>
