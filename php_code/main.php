@@ -24,7 +24,7 @@
                 <th>Select</th>
             </tr>
                 <?php
-                    $result = mysqli_query($connection, "SELECT * FROM idm216_items items INNER JOIN idm216_images item_images ON items.id = item_images.id");
+                    $result = mysqli_query($connection, "SELECT * FROM idm216_items items INNER JOIN idm216_images item_images ON items.id = item_images.id INNER JOIN idm216_prices ip ON items.id = ip.item_id");
                         while ($row = mysqli_fetch_assoc($result)) {
                             echo "<tr>";
                                  echo "<td>" . htmlspecialchars($row['id'] ?? '') . "</td>";
@@ -35,11 +35,11 @@
                                  echo "<td>
                                         <form id='size_form' method='POST' action='submit.php'>
                                             <label for='select_small'>
-                                            <input class='" . htmlspecialchars($row['id']) ."' type='radio' name='select[" . htmlspecialchars($row['id']) . "]' value='" . htmlspecialchars($row['s_price']) . "'> Small</label> | 
+                                            <input class='" . htmlspecialchars($row['id']) . "' type='radio' name='select[" . htmlspecialchars($row['id']) . "]' value='small_" . htmlspecialchars($row['id']) . "'> Small</label> | 
                                             <label for='select_medium'>
-                                            <input class='" . htmlspecialchars($row['id'] ?? '') ."' type='radio' name='select[" . htmlspecialchars($row['id'] ?? '') . "]' value='" . htmlspecialchars($row['m_price'] ?? '') . "'> Medium</label> | 
+                                            <input class='" . htmlspecialchars($row['id']) . "' type='radio' name='select[" . htmlspecialchars($row['id'] ?? '') . "]' value='medium_" . htmlspecialchars($row['id'] ?? '') . "'> Medium</label> | 
                                             <label for='select_large'>
-                                            <input class='" . htmlspecialchars($row['id']) ."' type='radio' name='select[" . htmlspecialchars($row['id']) . "]' value='" . htmlspecialchars($row['l_price']) . "'> Large</label> 
+                                            <input class='" . htmlspecialchars($row['id']) . "' type='radio' name='select[" . htmlspecialchars($row['id']) . "]' value='large_" . htmlspecialchars($row['id']) . "'> Large</label> 
                                     </td>";
                                  echo "</tr>";
                         };
@@ -47,11 +47,11 @@
         </table>
         
         <br><br>
+
         <input type="submit" value="Order" name="order_button">
         </form>
 
         <input type="submit" value="Reset" name="reset_button" onclick="resetBtn()">
-        
 
     <script src="javascript/postscript.js"></script>
 </body>

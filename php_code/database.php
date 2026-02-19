@@ -16,9 +16,30 @@
         KC's Database
     </h1>
 
-    <h3>Menu Items + Prices</h3>
+    <h3>Menu Items</h3>
     <?php
         $result = mysqli_query($connection, "SELECT * FROM idm216_items");
+            echo '<table class="data-table">
+                <tr class="data-heading">'; 
+                    while ($property = mysqli_fetch_field($result)) {
+                        echo '<td>' . htmlspecialchars($property->name) . '</td>'; 
+                    }
+                echo '</tr>'; 
+
+            
+                while ($row = mysqli_fetch_row($result)) {
+                    echo "<tr>";
+                    foreach ($row as $item) {
+                        echo '<td>' . htmlspecialchars($item ?? '') . '</td>'; 
+                    }
+                    echo '</tr>';
+                }
+            echo "</table>";
+    ?>
+
+    <h3>Prices</h3>
+    <?php
+        $result = mysqli_query($connection, "SELECT * FROM idm216_prices");
             echo '<table class="data-table">
                 <tr class="data-heading">'; 
                     while ($property = mysqli_fetch_field($result)) {
