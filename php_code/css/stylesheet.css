@@ -27,4 +27,8 @@ td {
         background-color: #ff5b42;
         color: white;
     }
+
+    .description, .ingredients{
+        width: 15%;
+    }
 }

@@ -32,39 +32,39 @@
                                 echo "<tr>";
                                     echo "<td>" . htmlspecialchars($row['id'] ?? '') . "</td>";
                                     echo "<td>" . htmlspecialchars($row['name'] ?? '') . "</td>";
-                                    echo "<td>";
+                                    echo "<td class='ingredients'>";
                                         if ($row['id'] == 1) {
                                             echo "<form id='ingredients' method='POST' action='order_submit.php'>
                                                 <label for='select_small'>
-                                                <input class='" . htmlspecialchars($row['id']) . "' type='checkbox' name='pick[]' value='Strawberry'> Strawberry </label> | 
+                                                <input class='" . htmlspecialchars($row['id']) . "' type='checkbox' name='pick[]' value='Strawberry'> Strawberry </label> <br><br> 
                                                 <label for='select_medium'>
-                                                <input class='" . htmlspecialchars($row['id'] ?? '') . "' type='checkbox' name='pick[]' value='Pineapple'> Pineapple </label> | 
+                                                <input class='" . htmlspecialchars($row['id'] ?? '') . "' type='checkbox' name='pick[]' value='Pineapple'> Pineapple </label> <br><br>
                                                 <label for='select_large'>
-                                                <input class='" . htmlspecialchars($row['id'] ?? '') . "' type='checkbox' name='pick[]' value='Mixed Berry'> Mixed Berry </label> | 
+                                                <input class='" . htmlspecialchars($row['id'] ?? '') . "' type='checkbox' name='pick[]' value='Mixed Berry'> Mixed Berry </label> <br><br>
                                                 <label for='select_large'>
-                                                <input class='" . htmlspecialchars($row['id'] ?? '') . "' type='checkbox' name='pick[]' value='Mango'> Mango </label> | 
+                                                <input class='" . htmlspecialchars($row['id'] ?? '') . "' type='checkbox' name='pick[]' value='Mango'> Mango </label> <br><br>
                                                 <label for='select_large'>
-                                                <input class='" . htmlspecialchars($row['id'] ?? '') . "' type='checkbox' name='pick[]' value='Banana'> Banana </label> | 
+                                                <input class='" . htmlspecialchars($row['id'] ?? '') . "' type='checkbox' name='pick[]' value='Banana'> Banana </label> <br><br>
                                                 <label for='select_large'>
-                                                <input class='" . htmlspecialchars($row['id'] ?? '') . "' type='checkbox' name='pick[]' value='Kale'> Kale </label> | 
+                                                <input class='" . htmlspecialchars($row['id'] ?? '') . "' type='checkbox' name='pick[]' value='Kale'> Kale </label> <br><br>
                                                 <label for='select_large'>
                                                 <input class='" . htmlspecialchars($row['id'] ?? '') . "' type='checkbox' name='pick[]' value='Spinich'> Spinich </label>";
                                         }
                                     echo "</td>";
-                                    echo "<td> $" . htmlspecialchars($row['s_price'] ?? '') . " | ";
+                                    echo "<td> $" . htmlspecialchars($row['s_price'] ?? '') . " <br><br> ";
                                     if ($row['m_price'] !== null){
-                                        echo "$" . htmlspecialchars($row['m_price'] ?? '') . " | ";
+                                        echo "$" . htmlspecialchars($row['m_price'] ?? '') . " <br><br> ";
                                     };
                                     echo "$" . htmlspecialchars($row['l_price'] ?? '') . "</td>";
-                                    echo "<td>" . htmlspecialchars($row['description']) . "</td>";
+                                    echo "<td class='description'>" . htmlspecialchars($row['description']) . "</td>";
                                     echo "<td><img src='" . htmlspecialchars($row['image']) . "' alt='" . htmlspecialchars($row['name']) . "' width='100'></td>";
                                     echo "<td>
                                             <form id='size_form' method='POST' action='order_submit.php'>
                                                 <label for='select_small'>
-                                                <input class='" . htmlspecialchars($row['id']) . "' type='radio' name='select[" . htmlspecialchars($row['id']) . "]' value='small_" . htmlspecialchars($row['id']) . "'> Small</label> |"; 
+                                                <input class='" . htmlspecialchars($row['id']) . "' type='radio' name='select[" . htmlspecialchars($row['id']) . "]' value='small_" . htmlspecialchars($row['id']) . "'> Small</label> <br><br>"; 
                                     if ($row['m_price'] !== null) {
                                     echo        "<label for='select_medium'>
-                                                <input class='" . htmlspecialchars($row['id']) . "' type='radio' name='select[" . htmlspecialchars($row['id'] ?? '') . "]' value='medium_" . htmlspecialchars($row['id'] ?? '') . "'> Medium</label> |";
+                                                <input class='" . htmlspecialchars($row['id']) . "' type='radio' name='select[" . htmlspecialchars($row['id'] ?? '') . "]' value='medium_" . htmlspecialchars($row['id'] ?? '') . "'> Medium</label> <br><br>";
                                     };
                                     echo        "<label for='select_large'>
                                                 <input class='" . htmlspecialchars($row['id']) . "' type='radio' name='select[" . htmlspecialchars($row['id']) . "]' value='large_" . htmlspecialchars($row['id']) . "'> Large</label> 
