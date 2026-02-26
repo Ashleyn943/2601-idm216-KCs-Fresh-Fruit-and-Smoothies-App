@@ -9,6 +9,9 @@
     <h1>COMING SOON</h1>
     <p>Test</p>
     <a href="database.php">Database Here</a>
+    <br><br>
     <a href="main.php">Main Menu Here</a>
+    <br><br>
+    <a href="order.php">Full Ordering System Here</a>
 </body>
 </html>
