@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Bag - KC</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+
+        <!-- Header -->
+        <div class="page-header">
+            <a href="customize.html" class="back-button">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </a>
+            <h1 class="page-title">YOUR BAG</h1>
+            <div style="width: 45px;"></div>
+        </div>
+
+        <!-- Bag Content -->
+        <div class="bag-content">
+
+            <!-- Static placeholder bag item -->
+            <div class="bag-item">
+                <div class="bag-item-image">
+                    <img src="Smoothie_images/custom.png" alt="Custom Smoothie">
+                </div>
+                <div class="bag-item-details">
+                    <div class="bag-item-header">
+                        <span class="bag-item-name">Custom Smoothie</span>
+                        <span class="bag-item-price">$0.00</span>
+                    </div>
+                    <div class="order-details">
+                        <div class="detail-section">
+                            <span class="detail-badge detail-size">Medium</span>
+                        </div>
+                        <div class="detail-section">
+                            <span class="detail-badge detail-ingredient">Strawberry</span>
+                            <span class="detail-badge detail-ingredient">Mango</span>
+                            <span class="detail-badge detail-ingredient">Banana</span>
+                        </div>
+                    </div>
+                    <div class="bag-item-actions">
+                        <a href="customize.html" class="bag-action-link">Edit</a>
+                        <a href="#" class="bag-action-link" id="removeBtn">Remove</a>
+                        <div class="bag-quantity-controls">
+                            <button class="quantity-button minus">−</button>
+                            <span class="quantity">1</span>
+                            <button class="quantity-button plus">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subtotal -->
+            <div class="bag-subtotal">
+                <span>Subtotal</span>
+                <span class="bag-subtotal-amount">$0.00</span>
+            </div>
+
+            <!-- Buttons -->
+            <div class="bag-action-buttons">
+                <a href="customize.html" class="btn btn-secondary">Add more items</a>
+                <a href="checkout.html" class="btn btn-primary">Checkout</a>
+            </div>
+        </div>
+
+        <!-- Navigation Bar -->
+        <div class="nav-bar">
+            <a href="index.html" class="nav-item">Order</a>
+            <a href="bag.html" class="nav-item active">Bag</a>
+        </div>
+    </div>
+
+    <!-- Remove Confirmation Modal -->
+    <div class="modal-overlay-centered" id="removeModal">
+        <div class="confirm-modal">
+            <h2 class="confirm-title">Remove Item?</h2>
+            <p class="confirm-message">Are you sure you want to remove this item from your bag?</p>
+            <div class="confirm-buttons">
+                <button class="btn btn-secondary" id="cancelRemove">Cancel</button>
+                <button class="btn btn-primary" id="confirmRemove">Remove</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

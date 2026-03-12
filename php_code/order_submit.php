@@ -99,7 +99,7 @@
      ?>
 
     <a href="reset.php">Return to Menu</a>
-    <h1>ORDER #001</h1>
+    <h1>ORDER # <?php echo hexdec( uniqid() ); ?></h1>
     <h3>Receipt</h3>
          <?php
             foreach ($_SESSION['order'] as $row) {
