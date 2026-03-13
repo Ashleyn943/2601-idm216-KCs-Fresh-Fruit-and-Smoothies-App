@@ -1,6 +1,8 @@
 <?php
     session_start();
     require_once('db.php'); 
+
+    var_dump($_POST['quantity']);
 ?>
 
 <!DOCTYPE html>
@@ -28,9 +30,10 @@
         <!-- Bag Content -->
         <div class="bag-content">
 
-            <!-- Items in Bag -->
-            <div class="bagItemsContainer">
-                <?php 
+            <?php
+                if (!empty($_SESSION['order'])) {
+                //Items in Bag
+                echo "<div class='bagItemsContainer'>";
                     foreach ($_SESSION['order'] as $index => $row) {
                         echo "<div class='bag-item' data-index='" . intval($index) . "'>";
                             echo "<div class='bag-item-image'>";
@@ -53,8 +56,9 @@
                                 echo "<div class='bag-item-header'>";
                                     $item_name = $connection->query("SELECT name from idm216_items WHERE id = " . intval($row['item_id']) . "");
                                     $item_name_row = $item_name->fetch_assoc();
+                                    $lineTotal = floatval($row['item_price']) * intval($row['quantity']);
                                         echo "<span class='bag-item-name'>" . htmlspecialchars($item_name_row['name'] ?? '') . "</span>";
-                                        echo "<span class='bag-item-price' id='price-" . intval($index) . "'>$" . number_format(floatval($row['item_price']), 2) . "</span>";
+                                        echo "<span class='bag-item-price' id='price-" . intval($index) . "'>$" . number_format($lineTotal, 2) . "</span>";
                                 echo "</div>";
 
                                 echo "<div class='order-details'>";
@@ -180,36 +184,60 @@
                                     echo "<a href='#' class='bag-action-link removeBtn' data-index='" . intval($index) . "'>Remove</a>";
                                     echo "<div class='bag-quantity-controls' data-index='" . intval($index) . "' data-base-price='" . floatval($row['item_price']) . "'>";
                                         echo "<button type='button' class='quantity-button minus'>−</button>";
-                                        echo "<span class='quantity'>1</span>";
+                                        echo "<span class='quantity'>" . intval($row['quantity']) . "</span>";
                                         echo "<button type='button' class='quantity-button plus'>+</button>";
                                     echo "</div>";
                                 echo "</div>";
                             echo "</div>";
                         echo "</div>";                
                         }
-                ?>
-            </div>
+            echo "</div>";
 
-            <div class="bag-subtotal">
-                <span>Subtotal</span>
-                <span class="bag-subtotal-amount">
-                    <?php 
+            echo "<div class='bag-subtotal'>";
+                echo "<span>Subtotal</span>";
+                echo "<span class='bag-subtotal-amount'>";
                         $subtotal = 0;
                         foreach ($_SESSION['order'] as $row) {
-                            $subtotal += floatval($row['item_price']);
+                            $subtotal += floatval($row['item_price']) * intval($row['quantity']);
                         }
                         echo "$" . number_format($subtotal, 2);
-                    ?>
-                </span>
-            </div>
+                echo "</span>";
+            echo "</div>";
 
-            <!-- Buttons -->
-            <div class="bag-action-buttons">
-                <a href="index.php" class="btn btn-secondary">Add more items</a>
-                <a href="checkout.php" class="btn btn-primary">Checkout</a>
-            </div>
+            //Buttons 
+            echo "<div class='bag-action-buttons'>";
+                echo "<a href='index.php' class='btn btn-secondary'>Add more items</a>";
+                echo "<a href='checkout.php' class='btn btn-primary'>Checkout</a>";
+            echo "</div>";
+        } else {
+            echo "<div class='bagItemsContainer'>";
+                echo "<div class='empty-bag'>";
+                    echo "<div class='empty-bag-icon-svg'>";
+                        echo "<svg width='120' height='120' viewBox='0 0 200 200' fill='none' xmlns='http://www.w3.org/2000/svg'>";
+                            // Bag body 
+                            echo "<path d='M40 75 L160 75 L170 180 L30 180 Z' 
+                                stroke='#ddd' 
+                                stroke-width='7' 
+                                fill='none' 
+                                stroke-linejoin='round'/>";
+                            
+                            //Single handle
+                            echo "<path d='M65 75 C65 45, 135 45, 135 75'
+                                stroke='#ddd' 
+                                stroke-width='7' 
+                                fill='none' 
+                                stroke-linecap='round'/>";
+                        echo"</svg>";
+                    echo"</div>";
+                        echo "<h2 class='empty-bag-title'>Your Bag is Empty</h2>";
+                        echo "<p class='empty-bag-message'>Order some delicious smoothies!</p>";
+                        echo "<a href='index.php' class='empty-bag-button'>Start Ordering</a>";
+                echo "</div>";
+            echo "</div>";
+        }
+        
+        ?>
         </div>
-
         <!-- Navigation Bar -->
         <div class="nav-bar">
             <a href="index.php" class="nav-item">Order</a>

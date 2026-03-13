@@ -85,7 +85,7 @@
                                         echo "</div>";
                                         echo "</div>";
 
-                                        if (!empty($row['add_ons'])) {
+                                        if (!empty($row['add_ons']) && $row['add_ons'] != "not available" && $row['item_id'] !== 2) {
                                             $item_price = $row['item_price'] - (count(explode("*", $row['add_ons'])) * 0.50);
                                             $add_on_listeed = explode("*", $row['add_ons']);
                                                 echo "<div>";

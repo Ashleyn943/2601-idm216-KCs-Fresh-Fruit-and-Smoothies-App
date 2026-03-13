@@ -46,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['select'])) {
     
     if ($id != 2) {
         $add_on_price = 0;
+        $add_ons = "not available";
         if (isset($_POST['add' . $id])) {
             $add_ons = implode("*", $_POST['add' . $id]);
             $add_on_count = count($_POST['add' . $id]);
@@ -58,15 +59,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['select'])) {
 
     $quantity = max(1, intval($_POST['quantity'] ?? 1));
 
-    for ($i = 0; $i < $quantity; $i++) {
-            $_SESSION['order'][] = [
-                'item_id'     => $id,
-                'size'        => $size,
-                'item_price'  => floatval($priceValue + $add_on_price),
-                'ingredients' => $ingredients,
-                'add_ons'     => $add_ons
-            ];
-        }
+    $_SESSION['order'][] = [
+        'item_id'     => $id,
+        'size'        => $size,
+        'item_price'  => floatval($priceValue + $add_on_price),
+        'ingredients' => $ingredients,
+        'add_ons'     => $add_ons,
+        'quantity'    => $quantity
+    ];
+
 
     if (isset($_POST['order_submit'])) {
         header("Location: checkout.php");
@@ -229,19 +230,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['select'])) {
                                     </label>
                                 </div>
                         </section>
-                    <?php
-                    endif;
-                    ?>
+                    
                     <!-- Price and Actions -->
                     <div class="bottom-section">
                         <div class="price-quantity">
                             <span class="total-price">$0.00</span>
                             <div class="quantity-controls">
                                 <button type="button" class="quantity-button minus">−</button>
-                                <span class="quantity">1</span>
+                                <span class="quantity"><?php echo isset($_POST['quantity']) ? $_POST['quantity'] : 1; ?></span>
                                 <button type="button" class="quantity-button plus">+</button>
+                                <input type="hidden" name="quantity" id="quantity-input" value="1">
                             </div>
-                            <input type="hidden" name="quantity" id="quantity-input" value="1">
                         </div>
                         <div class="action-buttons">
                             <input type="submit" name="add_to_bag" value="Add to Bag" class="btn btn-secondary"></input>
@@ -249,7 +248,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['select'])) {
                         </div>
                     </div>
                 </div>
-                        </form>
+                <?php
+                    endif;
+                ?>
+            </form>
             <?php
             }
             ?>

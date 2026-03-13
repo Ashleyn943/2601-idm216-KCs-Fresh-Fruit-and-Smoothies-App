@@ -40,37 +40,81 @@
 
                 <hr class="receipt-divider">
 
-                <div class="receipt-item">
+                <div class="receipt-item" style="display: block;">
                         <div>
                             <?php
                                 foreach ($_SESSION['order'] as $row) {
                                     $item_name = $connection->query("SELECT name from idm216_items WHERE id = " . intval($row['item_id']) . "");
                                     $item_name_row = $item_name->fetch_assoc();
                                     echo "<div style='display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;'>";
-                                    echo "<div style='flex: 1;'>";
-                                        echo "<div style='font-weight: 600; margin-bottom: 4px;'>" . htmlspecialchars($item_name_row['name'] ?? '') . "</div>";
-                                                if ($row['item_id'] == 1) {
-                                                    $selected_ingredients = explode("*", $row['ingredients']);
-                                                            echo "<div class='order-details-checkout' style='font-size: 13px; color: #666; line-height: 1.4;'>" . htmlspecialchars($row['size']) . "," . htmlspecialchars($selected_ingredients[0]) . "," . htmlspecialchars($selected_ingredients[1]) . "," . htmlspecialchars($selected_ingredients[2]) . "</div>";
-                                                } else {
-                                                    echo "<div class='order-details-checkout' style='font-size: 13px; color: #666; line-height: 1.4;'>" . htmlspecialchars($row['size']) . "</div>";
+                                        echo "<div style='flex: 1;'>";
+                                            echo "<div class='summary-item-name' style='font-weight: 600; margin-bottom: 4px;'>" 
+                                                . htmlspecialchars($item_name_row['name'] ?? '') .
+                                            "</div>";
+                                            echo "<div class='order-details-checkout' style='font-size: 13px; color: #666; line-height: 1.4;'>" ; 
+                                                if (htmlspecialchars($row['size']) == "small_1" || htmlspecialchars($row['size']) == "small_2" || htmlspecialchars($row['size']) == "small_3" || htmlspecialchars($row['size']) == "small_4") {
+                                                    echo "Small";
+                                                } elseif (htmlspecialchars($row['size']) == "medium_1" || htmlspecialchars($row['size']) == "medium_3" || htmlspecialchars($row['size']) == "medium_4") {
+                                                    echo "Medium";
+                                                } elseif (htmlspecialchars($row['size']) == "large_1" || htmlspecialchars($row['size']) == "large_2" || htmlspecialchars($row['size']) == "large_3" || htmlspecialchars($row['size']) == "large_4") {
+                                                    echo "Large";
                                                 }
-                                                    if (!empty($row['add_ons']) && $row['add_ons'] != "not available") {
-                                                        $add_ons_listed = explode("*", $row['add_ons']);
-                                                            foreach ($add_ons_listed as $add_on) {
-                                                                echo "<div class='order-details-checkout' style='font-size: 13px; color: #666; line-height: 1.4;'>" . htmlspecialchars($add_on) . " - $0.50</div>";
-                                                            }
+                                            "</div>";
+
+                                            if ($row['item_id'] == 1) {
+                                                $selected_ingredients = explode("*", $row['ingredients']);
+                                                    echo "<div class='order-details-checkout' style='font-size: 13px; color: #666; line-height: 1.4;'>" 
+                                                        . htmlspecialchars($selected_ingredients[0]) . ", "
+                                                        . htmlspecialchars($selected_ingredients[1]) . ", " 
+                                                        . htmlspecialchars($selected_ingredients[2]) . 
+                                                    "</div>";
+                                            };
+
+                                            if (!empty($row['add_ons']) && $row['add_ons'] != "not available") {
+                                                $add_ons_listed = explode("*", $row['add_ons']);
+                                                echo "<div class='order-details-checkout' style='font-size: 13px; color: #666; line-height: 1.4;'>
+                                                    Add Ons:
+                                                </div>";
+                                                    foreach ($add_ons_listed as $add_on) {
+                                                        echo "<div class='order-details-checkout' style='margin-left: 15px; font-size: 13px; color: #666; line-height: 1.4;'>" 
+                                                            . htmlspecialchars($add_on) . "
+                                                        </div>";
                                                     }
+                                            };
+                                        echo "</div>";
+                                        echo "</div>";
+
+                                        if (!empty($row['add_ons']) && $row['add_ons'] != "not available" && $row['item_id'] !== 2) {
+                                            $item_price = $row['item_price'] - (count(explode("*", $row['add_ons'])) * 0.50);
+                                            $add_on_listeed = explode("*", $row['add_ons']);
+                                                echo "<div>";
+                                                    echo "<div style='font-weight: 600; margin-left: 15px; margin-bottom: 4px; white-space: nowrap;'> $" 
+                                                        . number_format(floatval($item_price), 2) . 
+                                                    "</div>";
+                                                    echo "<div class='order-details-checkout' style='line-height: 1.4;'>";
+                                                        echo "<div class='order-details-checkout' style='font-size: 13px; color: #666; margin-left: 15px; line-height: 1.4;'>&nbsp;</div>";
+
+                                                        if ($row['item_id'] == 1) {
+                                                            echo "<div class='order-details-checkout' style='font-size: 13px; color: #666; margin-left: 15px; line-height: 1.4;'>&nbsp;</div>";
+                                                        }
+
+                                                        echo "<div class='order-details-checkout' style='font-size: 13px; color: #666; margin-left: 15px; line-height: 1.4;'>&nbsp;</div>";
+                                                        echo "<div class='order-details-checkout' style='font-size: 13px; color: #666; margin-left: 15px; line-height: 1.4;'>&nbsp;</div>";
+                                                        
+                                                        foreach ($add_on_listeed as $add_on){
+                                                            echo "<div class='order-details-checkout' style='font-size: 13px; color: #666; margin-left: 15px; line-height: 1.4;'>+$0.50</div>";
+                                                        }
+                                                    echo "</div>";
+                                                echo "</div>";
+                                        } else {
+                                            echo "<div style='font-weight: 600; margin-left: 15px; white-space: nowrap;'> $" 
+                                                . number_format(floatval($row['item_price']), 2) . 
+                                            "</div>";
+                                        }
+
                                     echo "</div>";
-                                    if (!empty($row['add_ons'])) {
-                                        $item_price = $row['item_price'] - (count(explode("*", $row['add_ons'])) * 0.50);
-                                        echo "<div style='font-weight: 600; margin-left: 15px; white-space: nowrap;'> $" . number_format(floatval($item_price), 2) . "</div>";
-                                    } else {
-                                        echo "<div style='font-weight: 600; margin-left: 15px; white-space: nowrap;'> $" . number_format(floatval($row['item_price']), 2) . "</div>";
+                                        
                                     }
-                                    echo "</div>";
-                                    
-                                }
                             ?>
                         </div>
                     </div>

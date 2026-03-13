@@ -60,7 +60,8 @@
                                     echo "<div style='display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;'>";
                                         echo "<div style='flex: 1;'>";
                                             echo "<div class='summary-item-name' style='font-weight: 600; margin-bottom: 4px;'>" 
-                                                . htmlspecialchars($item_name_row['name'] ?? '') .
+                                                . htmlspecialchars($item_name_row['name'] ?? '') . " - "
+                                                . htmlspecialchars($row['quantity']) . "x" .
                                             "</div>";
                                             echo "<div class='order-details-checkout' style='font-size: 13px; color: #666; line-height: 1.4;'>" ; 
                                                 if (htmlspecialchars($row['size']) == "small_1" || htmlspecialchars($row['size']) == "small_2" || htmlspecialchars($row['size']) == "small_3" || htmlspecialchars($row['size']) == "small_4") {
@@ -95,7 +96,7 @@
                                         echo "</div>";
                                         echo "</div>";
 
-                                        if (!empty($row['add_ons'])) {
+                                        if (!empty($row['add_ons']) && $row['add_ons'] != "not available" && $row['item_id'] !== 2) {
                                             $item_price = $row['item_price'] - (count(explode("*", $row['add_ons'])) * 0.50);
                                             $add_on_listeed = explode("*", $row['add_ons']);
                                                 echo "<div>";
@@ -186,7 +187,7 @@
             <!-- Pick-up Name -->
             <div class="form-section">
                 <label class="form-label">PICK-UP NAME</label>
-                <input type="text" class="text-input" id="pickupNameInput" placeholder="Name here">
+                <input type="text" class="text-input" id="pickupNameInput" placeholder="Name here" required>
             </div>
 
             <!-- Tip -->
@@ -217,7 +218,7 @@
                 <label class="form-label">PAYMENT METHOD</label>
                 <div class="radio-group">
                     <label class="radio-option">
-                        <input type="radio" name="payment" class="radio-input" value="credit" disable>
+                        <input type="radio" name="payment" class="radio-input" value="credit" disabled>
                         <div class="payment-option">
                             <img src="checkout_images/credit-card.png" alt="Credit Card" class="payment-icon-img">
                             <div class="radio-label">Credit Card</div>
@@ -233,7 +234,7 @@
                         <div class="radio-circle"></div>
                     </label>
                     <label class="radio-option">
-                        <input type="radio" name="payment" class="radio-input" value="venmo" disable>
+                        <input type="radio" name="payment" class="radio-input" value="venmo" disabled>
                         <div class="payment-option">
                             <img src="checkout_images/venmo.png" alt="Venmo" class="payment-icon-img">
                             <div class="radio-label">Venmo</div>

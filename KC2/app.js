@@ -45,8 +45,6 @@ function initCustomizePage() {
     small_4: 4.50, medium_4: 5.50, large_4: 6.50
 };
 
-let quantity = 1;
-
     //Updates the price displayed on page
     function updatePrice() {
         const sizePrice = document.querySelector('.size-radio:checked');
@@ -69,12 +67,16 @@ let quantity = 1;
     const quantityDisplay = document.querySelector('.quantity');
     const minusButton = document.querySelector('.quantity-button.minus');
     const plusButton = document.querySelector('.quantity-button.plus');
+    const quantityInput = document.getElementById('quantity-input'); 
+
+    let quantity = 1;
 
     if (minusButton) {
         minusButton.addEventListener('click', () => {
             if (quantity > 1) {
                 quantity--;
                 quantityDisplay.textContent = quantity;
+                if (quantityInput) quantityInput.value = quantity; 
                 updatePrice();
             }
         });
@@ -84,6 +86,7 @@ let quantity = 1;
         plusButton.addEventListener('click', () => {
             quantity++;
             quantityDisplay.textContent = quantity;
+            if (quantityInput) quantityInput.value = quantity; 
             updatePrice();
         });
     }
@@ -102,7 +105,7 @@ function initBagPage() {
         const index     = controls.dataset.index;
         const basePrice = parseFloat(controls.dataset.basePrice);
         const priceEl   = document.getElementById('price-' + index);
-        let qty = 1;
+        let qty = parseInt(display.textContent) || 1;
 
         display.textContent = qty;
         if (priceEl) priceEl.textContent = '$' + (basePrice * qty).toFixed(2);
@@ -144,8 +147,6 @@ function initBagPage() {
 
     //for remove 
     const modal = document.getElementById('removeModal');
-    const cancelBtn  = document.getElementById('cancelRemove');
-    const confirmBtn = document.getElementById('confirmRemove');
     let pendingIndex = null;
 
     document.querySelectorAll('.removeBtn').forEach(btn => {
@@ -156,15 +157,20 @@ function initBagPage() {
         });
     });
 
-    cancelBtn.addEventListener('click', () => {
-        modal.classList.remove('active');
-        pendingIndex = null;
-    });
+    const cancelBtn  = document.getElementById('cancelRemove');
+    const confirmBtn = document.getElementById('confirmRemove');
 
-    confirmBtn.addEventListener('click', () => {
-        if (pendingIndex === null) return;
-        window.location.href = 'remove_item.php?index=' + pendingIndex;
-    });
+    if (cancelBtn && confirmBtn) {
+        cancelBtn.addEventListener('click', () => {
+            modal.classList.remove('active');
+            pendingIndex = null;
+        });
+
+        confirmBtn.addEventListener('click', () => {
+            if (pendingIndex === null) return;
+            window.location.href = 'remove_item.php?index=' + pendingIndex;
+        });
+    }
     
 }
 
