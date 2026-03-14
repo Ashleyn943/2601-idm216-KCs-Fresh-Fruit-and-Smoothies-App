@@ -230,7 +230,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['select'])) {
                                     </label>
                                 </div>
                         </section>
-                    
+                    <?php
+                        endif;
+                    ?>
                     <!-- Price and Actions -->
                     <div class="bottom-section">
                         <div class="price-quantity">
@@ -248,17 +250,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['select'])) {
                         </div>
                     </div>
                 </div>
-                <?php
-                    endif;
-                ?>
+                
             </form>
             <?php
-            }
+            }  
             ?>
         </div>
     </div>
 
     <script src="app.js"></script>
+    <script src="lazyload.js"></script>
 </body>
 
 </html>

@@ -36,7 +36,7 @@
 
         <!-- Header -->
         <div class="page-header">
-            <a href="bag.php" class="back-button">
+            <a href="index.php" class="back-button">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
@@ -88,9 +88,12 @@
                                                     Add Ons:
                                                 </div>";
                                                     foreach ($add_ons_listed as $add_on) {
-                                                        echo "<div class='order-details-checkout' style='margin-left: 15px; font-size: 13px; color: #666; line-height: 1.4;'>" 
-                                                            . htmlspecialchars($add_on) . "
-                                                        </div>";
+                                                        echo "<div class='order-details-checkout' style='margin-left: 15px; font-size: 13px; color: #666; line-height: 1.4;'>";
+                                                            echo htmlspecialchars($add_on);
+                                                            if ($row['quantity'] > 1) {
+                                                                echo " (per smoothie) ";
+                                                            };
+                                                        echo "</div>";
                                                     }
                                             };
                                         echo "</div>";
@@ -99,9 +102,10 @@
                                         if (!empty($row['add_ons']) && $row['add_ons'] != "not available" && $row['item_id'] !== 2) {
                                             $item_price = $row['item_price'] - (count(explode("*", $row['add_ons'])) * 0.50);
                                             $add_on_listeed = explode("*", $row['add_ons']);
+                                            $quantity_price = $item_price * intval($row['quantity']);
                                                 echo "<div>";
                                                     echo "<div style='font-weight: 600; margin-left: 15px; margin-bottom: 4px; white-space: nowrap;'> $" 
-                                                        . number_format(floatval($item_price), 2) . 
+                                                        . number_format(floatval($quantity_price), 2) . 
                                                     "</div>";
                                                     echo "<div class='order-details-checkout' style='line-height: 1.4;'>";
                                                         echo "<div class='order-details-checkout' style='font-size: 13px; color: #666; margin-left: 15px; line-height: 1.4;'>&nbsp;</div>";
@@ -113,18 +117,29 @@
                                                         echo "<div class='order-details-checkout' style='font-size: 13px; color: #666; margin-left: 15px; line-height: 1.4;'>&nbsp;</div>";
                                                         
                                                         foreach ($add_on_listeed as $add_on){
-                                                            echo "<div class='order-details-checkout' style='font-size: 13px; color: #666; margin-left: 15px; line-height: 1.4;'>+$0.50</div>";
+                                                            echo "<div class='order-details-checkout' style='font-size: 13px; color: #666; margin-left: 15px; line-height: 1.4;'>";
+                                                                $total_add_on_price = 0.50;
+                                                                $addon_quantity = $total_add_on_price * intval($row['quantity']);
+                                                                echo "+ " . number_format(floatval($addon_quantity), 2);
+                                                            echo "</div>";
                                                         }
                                                     echo "</div>";
                                                 echo "</div>";
                                         } else {
+                                            $quantity_price = $row['item_price'] * intval($row['quantity']);
                                             echo "<div style='font-weight: 600; margin-left: 15px; white-space: nowrap;'> $" 
-                                                . number_format(floatval($row['item_price']), 2) . 
+                                                . number_format(floatval($quantity_price), 2) . 
                                             "</div>";
                                         }
                                     echo "</div>";
+
+                                        if ($row['quantity'] > 1) {
+                                            $quantity_price = $row['item_price'] * intval($row['quantity']);
+                                        } else {
+                                            $quantity_price = $row['item_price'];
+                                        }
                                         
-                                        $subtotal += floatval($row['item_price']);
+                                        $subtotal += floatval($quantity_price);
                                     }
                                 ?>
                         </div>
@@ -167,7 +182,7 @@
                 <label class="form-label">PICK-UP TIME</label>
                 <div class="radio-group">
                     <label class="radio-option" id="asapOption">
-                        <input type="radio" name="pickup-time" class="radio-input" value="asap">
+                        <input type="radio" name="pickup-time" class="radio-input" value="asap" required>
                         <div>
                             <div class="radio-label">ASAP (10-15 minutes)</div>
                         </div>
@@ -246,7 +261,7 @@
 
             <!-- Confirm Button -->
             <div class="checkout-button-section">
-                <button id="confirm-pay-btn" class="btn btn-primary btn-full">Confirm and Pay</button>
+                <button id="confirm-pay-btn" class="btn btn-primary btn-full" disabled>Confirm and Pay</button>
             </div>
         </div>
     </div>

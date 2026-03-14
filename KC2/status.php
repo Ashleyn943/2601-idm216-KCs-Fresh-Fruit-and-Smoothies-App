@@ -49,7 +49,8 @@
                                     echo "<div style='display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;'>";
                                         echo "<div style='flex: 1;'>";
                                             echo "<div class='summary-item-name' style='font-weight: 600; margin-bottom: 4px;'>" 
-                                                . htmlspecialchars($item_name_row['name'] ?? '') .
+                                                . htmlspecialchars($item_name_row['name'] ?? '') . " - "
+                                                . htmlspecialchars($row['quantity']) . "x" .
                                             "</div>";
                                             echo "<div class='order-details-checkout' style='font-size: 13px; color: #666; line-height: 1.4;'>" ; 
                                                 if (htmlspecialchars($row['size']) == "small_1" || htmlspecialchars($row['size']) == "small_2" || htmlspecialchars($row['size']) == "small_3" || htmlspecialchars($row['size']) == "small_4") {
@@ -76,9 +77,12 @@
                                                     Add Ons:
                                                 </div>";
                                                     foreach ($add_ons_listed as $add_on) {
-                                                        echo "<div class='order-details-checkout' style='margin-left: 15px; font-size: 13px; color: #666; line-height: 1.4;'>" 
-                                                            . htmlspecialchars($add_on) . "
-                                                        </div>";
+                                                        echo "<div class='order-details-checkout' style='margin-left: 15px; font-size: 13px; color: #666; line-height: 1.4;'>";
+                                                            echo htmlspecialchars($add_on);
+                                                                if ($row['quantity'] > 1) {
+                                                                    echo " (per smoothie) ";
+                                                                };
+                                                        echo "</div>";
                                                     }
                                             };
                                         echo "</div>";
@@ -87,9 +91,10 @@
                                         if (!empty($row['add_ons']) && $row['add_ons'] != "not available" && $row['item_id'] !== 2) {
                                             $item_price = $row['item_price'] - (count(explode("*", $row['add_ons'])) * 0.50);
                                             $add_on_listeed = explode("*", $row['add_ons']);
+                                            $quantity_price = $item_price * intval($row['quantity']);
                                                 echo "<div>";
                                                     echo "<div style='font-weight: 600; margin-left: 15px; margin-bottom: 4px; white-space: nowrap;'> $" 
-                                                        . number_format(floatval($item_price), 2) . 
+                                                        . number_format(floatval($quantity_price), 2) . 
                                                     "</div>";
                                                     echo "<div class='order-details-checkout' style='line-height: 1.4;'>";
                                                         echo "<div class='order-details-checkout' style='font-size: 13px; color: #666; margin-left: 15px; line-height: 1.4;'>&nbsp;</div>";
@@ -102,13 +107,18 @@
                                                         echo "<div class='order-details-checkout' style='font-size: 13px; color: #666; margin-left: 15px; line-height: 1.4;'>&nbsp;</div>";
                                                         
                                                         foreach ($add_on_listeed as $add_on){
-                                                            echo "<div class='order-details-checkout' style='font-size: 13px; color: #666; margin-left: 15px; line-height: 1.4;'>+$0.50</div>";
+                                                            echo "<div class='order-details-checkout' style='font-size: 13px; color: #666; margin-left: 15px; line-height: 1.4;'>";
+                                                                $total_add_on_price = 0.50;
+                                                                $addon_quantity = $total_add_on_price * intval($row['quantity']);
+                                                                echo "+ " . number_format(floatval($addon_quantity), 2);
+                                                            echo "</div>";
                                                         }
                                                     echo "</div>";
                                                 echo "</div>";
                                         } else {
+                                            $quantity_price = $row['item_price'] * intval($row['quantity']);
                                             echo "<div style='font-weight: 600; margin-left: 15px; white-space: nowrap;'> $" 
-                                                . number_format(floatval($row['item_price']), 2) . 
+                                                . number_format(floatval($quantity_price), 2) . 
                                             "</div>";
                                         }
 

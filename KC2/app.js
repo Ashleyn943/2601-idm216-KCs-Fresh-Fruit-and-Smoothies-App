@@ -47,6 +47,9 @@ function initCustomizePage() {
 
     //Updates the price displayed on page
     function updatePrice() {
+        const totalPriceEl = document.querySelector('.total-price');
+        if (!totalPriceEl) return;
+
         const sizePrice = document.querySelector('.size-radio:checked');
         let basePrice = sizePrice ? (prices[sizePrice.value] || 0) : 0;
 
@@ -69,7 +72,7 @@ function initCustomizePage() {
     const plusButton = document.querySelector('.quantity-button.plus');
     const quantityInput = document.getElementById('quantity-input'); 
 
-    let quantity = 1;
+    let quantity = parseInt(document.querySelector('.quantity')?.textContent) || 1;
 
     if (minusButton) {
         minusButton.addEventListener('click', () => {
@@ -90,6 +93,28 @@ function initCustomizePage() {
             updatePrice();
         });
     }
+
+//for editing 
+sizeSelect.forEach(radio => {
+    if (radio.checked) {
+        radio.closest('.size-button').classList.add('selected');
+    }
+});
+
+ingredientCheckboxes.forEach(checkbox => {
+    if (checkbox.checked) {
+        checkbox.closest('.ingredient-button').classList.add('selected');
+    }
+});
+
+addonCheckboxes.forEach(checkbox => {
+    if (checkbox.checked) {
+        checkbox.closest('.addon-item').classList.add('selected');
+    }
+});
+
+updatePrice();
+
 }
 
 // ============================================
