@@ -77,6 +77,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['select'])) {
         exit();
     }
 }
+
+            $result = mysqli_query($connection, "SELECT * 
+                                                FROM idm216_items items 
+                                                INNER JOIN idm216_images item_images ON items.id = item_images.id 
+                                                INNER JOIN idm216_prices ip ON items.id = ip.item_id  
+                                                WHERE items.id = $id");
+            while ($row = mysqli_fetch_assoc($result)) {
 ?>
 
 <!DOCTYPE html>
@@ -85,21 +92,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['select'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Custom Smoothie - KC</title>
+    <title><?php echo htmlspecialchars($row['name']); ?> - KC</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
     <div class="background">
         <div class="container customization">
-            <?php
-            $result = mysqli_query($connection, "SELECT * 
-                                                FROM idm216_items items 
-                                                INNER JOIN idm216_images item_images ON items.id = item_images.id 
-                                                INNER JOIN idm216_prices ip ON items.id = ip.item_id  
-                                                WHERE items.id = $id");
-            while ($row = mysqli_fetch_assoc($result)) {
-            ?>
                 <!-- Header -->
                 <div class="header customize-header">
                     <a href="index.php" class="back-button">

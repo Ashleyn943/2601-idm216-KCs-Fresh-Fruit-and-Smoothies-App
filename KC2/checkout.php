@@ -132,14 +132,8 @@
                                             "</div>";
                                         }
                                     echo "</div>";
-
-                                        if ($row['quantity'] > 1) {
-                                            $quantity_price = $row['item_price'] * intval($row['quantity']);
-                                        } else {
-                                            $quantity_price = $row['item_price'];
-                                        }
                                         
-                                        $subtotal += floatval($quantity_price);
+                                        $subtotal += floatval($row['item_price']) * intval($row['quantity']);
                                     }
                                 ?>
                         </div>
