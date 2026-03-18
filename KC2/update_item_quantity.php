@@ -12,9 +12,8 @@ if ($index >= 0 && isset($_SESSION['order'][$index])) {
     }
 
     $_SESSION['order'][$index]['quantity']   = $quantity;
-    $_SESSION['order'][$index]['item_price'] = $basePrice * $quantity;
 
-    echo json_encode(['success' => true, 'new_price' => $_SESSION['order'][$index]['item_price']]);
+    echo json_encode(['success' => true, 'new_price' => $basePrice * $quantity]);
 } else {
     echo json_encode(['success' => false]);
 }

@@ -1,3 +1,8 @@
+<?php
+    session_start();
+    require_once('db.php');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -30,52 +35,41 @@
 
         <!-- Products Grid -->
         <div class="products">
-            <a href="customize.html" class="product-card">
-                <div class="product-card-inner">
-                    <span class="badge most-popular">Most Popular</span>
-                    <div class="product-image">
-                        <img src="Smoothie_images/custom.png" alt="Custom Smoothie">
+            <?php
+            $result = mysqli_query($connection, "SELECT * FROM idm216_items items INNER JOIN idm216_images item_images ON items.id = item_images.id INNER JOIN idm216_prices ip ON items.id = ip.item_id");
+            while ($row = mysqli_fetch_assoc($result)) {
+            ?>
+                <a class="product-card">
+                    <div class="product-card-inner">
+                        <?php
+                        switch ($row['id']) {
+                            case 1:
+                                echo '<span class="badge most-popular">Most Popular</span>';
+                                break;
+                            case 2:
+                                // do nothing
+                                break;
+                            case 3:
+                                echo '<span class="badge campus-pick">Campus Pick</span>';
+                                break;
+                            case 4:
+                                echo '<span class="badge exclusive">Exclusive</span>';
+                                break;
+                        }
+                        ?>
+                        <div class="product-image">
+                            <img src="<?php echo htmlspecialchars($row['image']); ?>" alt="<?php echo htmlspecialchars($row['name']); ?>">
+                        </div>
                     </div>
-                </div>
-                <div class="product-name">Custom Smoothie</div>
-            </a>
-
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <div class="product-image">
-                        <img src="Smoothie_images/fruitCup.png" alt="Custom Fruit Salad">
-                    </div>
-                </div>
-                <div class="product-name">Custom Fruit Salad</div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <span class="badge campus-pick">Campus Pick</span>
-                    <div class="product-image">
-                        <img src="Smoothie_images/pb_banana.png" alt="Peanut Butter Banana Smoothie">
-                    </div>
-                </div>
-                <div class="product-name">Peanut Butter Banana Smoothie</div>
-            </div>
-
-            <div class="product-card">
-                <div class="product-card-inner">
-                    <span class="badge exclusive">Exclusive</span>
-                    <div class="product-image">
-                        <img src="Smoothie_images/taro.png" alt="Taro Smoothie">
-                    </div>
-                </div>
-                <div class="product-name">Taro Smoothie</div>
-            </div>
+                    <div class="product-name"><?php echo htmlspecialchars($row['name']); ?></div>
+                </a>
+            <?php
+            }
+            ?>
         </div>
 
         <!-- Navigation Bar -->
-        <div class="nav-bar">
-            <a href="index.php" class="nav-item active">Order</a>
-            <a href="bag.php" class="nav-item">Bag</a>
-            <div class="nav-item history">History</div>
-        </div>
+        <?php include 'nav.php'; ?>
     </div>
 </body>
 </html>
