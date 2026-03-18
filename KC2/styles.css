@@ -1521,6 +1521,10 @@ div.product-card {
     padding: 10px 0 20px;
 }
 
+.confirm-section:hover {
+    cursor: pointer;
+}
+
 .confirm-icon {
     width: 40px;
     height: 40px;

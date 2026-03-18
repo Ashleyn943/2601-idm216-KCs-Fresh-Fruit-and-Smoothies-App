@@ -280,6 +280,7 @@ function initCheckoutPage() {
 
             if (this.value === 'apple') {
                 document.getElementById('applePayModal').classList.add('active');
+                document.getElementById('confirm-pay-btn').removeAttribute('disabled');
             }
         });
     });
