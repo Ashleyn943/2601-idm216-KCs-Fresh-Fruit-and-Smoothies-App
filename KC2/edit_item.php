@@ -15,6 +15,7 @@ if (!isset($_SESSION['order'][$edit_index])) {
 }
 
 $existing            = $_SESSION['order'][$edit_index];
+$prefill_price      = $existing['item_price'] ?? 0;
 $prefill_size        = $existing['size'] ?? '';
 $prefill_ingredients = isset($existing['ingredients']) && $existing['ingredients'] !== 'not available'
     ? explode('*', $existing['ingredients'])
@@ -22,6 +23,7 @@ $prefill_ingredients = isset($existing['ingredients']) && $existing['ingredients
 $prefill_addons      = isset($existing['add_ons']) && $existing['add_ons'] !== 'not available'
     ? explode('*', $existing['add_ons'])
     : [];
+$prefill_quantity    = $existing['quantity'] ?? 1;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['select'])) {
     $size = $_POST['select'];
@@ -68,7 +70,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['select'])) {
         'base_price'  => floatval($priceValue + $add_on_price),
         'ingredients' => $ingredients,
         'add_ons'     => $add_ons,
-        'quantity'    => intval($existing['quantity'] ?? 1)
+        'quantity'    => intval($_POST['quantity'] ?? 1)
     ];
 
     header('Location: bag.php');
@@ -215,8 +217,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['select'])) {
                         <!-- Price and Actions -->
                         <div class="bottom-section">
                             <div class="price-quantity">
-                                <span class="total-price">$0.00</span>
+                                <span class="total-price"><?php echo '$' . number_format($prefill_price * $prefill_quantity, 2); ?></span>
+                                <div class="quantity-controls">
+                                    <button type="button" class="quantity-button minus">−</button>
+                                    <span class="quantity"><?php echo $prefill_quantity; ?></span>
+                                    <button type="button" class="quantity-button plus">+</button>
+                                    <input type="hidden" name="quantity" id="quantity-input" value="<?php echo $prefill_quantity; ?>">
+                                </div>
                             </div>
+                            
                             <div class="action-buttons">
                                 <a href="bag.php" class="btn btn-secondary">Cancel</a>
                                 <input type="submit" name="save_changes" value="Save Changes" class="btn btn-primary">

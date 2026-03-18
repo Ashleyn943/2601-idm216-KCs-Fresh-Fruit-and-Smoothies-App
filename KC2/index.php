@@ -68,56 +68,10 @@ require_once('db.php');
             <?php
             }
             ?>
-            <!-- Custom Smoothie -->
-            <!-- <a href="customize.html" class="product-card">
-                <div class="product-card-inner">
-                    <span class="badge most-popular">Most Popular</span>
-                    <div class="product-image">
-                        <img src="Smoothie_images/custom.png" alt="Custom Smoothie">
-                    </div>
-                </div>
-                <div class="product-name">Custom Smoothie</div>
-            </a> -->
-
-            <!-- Custom Fruit Salad -->
-            <!-- <div class="product-card">
-                <div class="product-card-inner">
-                    <div class="product-image">
-                        <img src="Smoothie_images/fruitCup.png" alt="Custom Fruit Salad">
-                    </div>
-                </div>
-                <div class="product-name">Custom Fruit Salad</div>
-            </div> -->
-
-            <!-- Peanut Butter Banana Smoothie -->
-            <!-- <div class="product-card">
-                <div class="product-card-inner">
-                    <span class="badge campus-pick">Campus Pick</span>
-                    <div class="product-image">
-                        <img src="Smoothie_images/pb_banana.png" alt="Peanut Butter Banana Smoothie">
-                    </div>
-                </div>
-                <div class="product-name">Peanut Butter Banana Smoothie</div>
-            </div> -->
-
-            <!-- Taro Smoothie -->
-            <!-- <div class="product-card">
-                <div class="product-card-inner">
-                    <span class="badge exclusive">Exclusive</span>
-                    <div class="product-image">
-                        <img src="Smoothie_images/taro.png" alt="Taro Smoothie">
-                    </div>
-                </div>
-                <div class="product-name">Taro Smoothie</div>
-            </div> -->
         </div>
 
         <!-- Navigation Bar -->
-        <div class="nav-bar">
-            <a href="index.php" class="nav-item active">Order</a>
-            <a href="bag.php" class="nav-item">Bag</a>
-            <div class="nav-item history">History</div>
-        </div>
+        <?php include 'nav.php'; ?>
     </div>
 
     <script src="app.js"></script>

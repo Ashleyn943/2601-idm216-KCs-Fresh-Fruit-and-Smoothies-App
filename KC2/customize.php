@@ -46,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['select'])) {
     
     if ($id != 2) {
         $add_on_price = 0;
+        $add_ons = "not available";
         if (isset($_POST['add' . $id])) {
             $add_ons = implode("*", $_POST['add' . $id]);
             $add_on_count = count($_POST['add' . $id]);
@@ -58,15 +59,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['select'])) {
 
     $quantity = max(1, intval($_POST['quantity'] ?? 1));
 
-    for ($i = 0; $i < $quantity; $i++) {
-            $_SESSION['order'][] = [
-                'item_id'     => $id,
-                'size'        => $size,
-                'item_price'  => floatval($priceValue + $add_on_price),
-                'ingredients' => $ingredients,
-                'add_ons'     => $add_ons
-            ];
-        }
+    $_SESSION['order'][] = [
+        'item_id'     => $id,
+        'size'        => $size,
+        'item_price'  => floatval($priceValue + $add_on_price),
+        'ingredients' => $ingredients,
+        'add_ons'     => $add_ons,
+        'quantity'    => $quantity
+    ];
+
 
     if (isset($_POST['order_submit'])) {
         header("Location: checkout.php");
@@ -76,6 +77,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['select'])) {
         exit();
     }
 }
+
+            $result = mysqli_query($connection, "SELECT * 
+                                                FROM idm216_items items 
+                                                INNER JOIN idm216_images item_images ON items.id = item_images.id 
+                                                INNER JOIN idm216_prices ip ON items.id = ip.item_id  
+                                                WHERE items.id = $id");
+            while ($row = mysqli_fetch_assoc($result)) {
 ?>
 
 <!DOCTYPE html>
@@ -84,21 +92,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['select'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Custom Smoothie - KC</title>
+    <title><?php echo htmlspecialchars($row['name']); ?> - KC</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
     <div class="background">
         <div class="container customization">
-            <?php
-            $result = mysqli_query($connection, "SELECT * 
-                                                FROM idm216_items items 
-                                                INNER JOIN idm216_images item_images ON items.id = item_images.id 
-                                                INNER JOIN idm216_prices ip ON items.id = ip.item_id  
-                                                WHERE items.id = $id");
-            while ($row = mysqli_fetch_assoc($result)) {
-            ?>
                 <!-- Header -->
                 <div class="header customize-header">
                     <a href="index.php" class="back-button">
@@ -230,7 +230,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['select'])) {
                                 </div>
                         </section>
                     <?php
-                    endif;
+                        endif;
                     ?>
                     <!-- Price and Actions -->
                     <div class="bottom-section">
@@ -238,10 +238,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['select'])) {
                             <span class="total-price">$0.00</span>
                             <div class="quantity-controls">
                                 <button type="button" class="quantity-button minus">−</button>
-                                <span class="quantity">1</span>
+                                <span class="quantity"><?php echo isset($_POST['quantity']) ? $_POST['quantity'] : 1; ?></span>
                                 <button type="button" class="quantity-button plus">+</button>
+                                <input type="hidden" name="quantity" id="quantity-input" value="1">
                             </div>
-                            <input type="hidden" name="quantity" id="quantity-input" value="1">
                         </div>
                         <div class="action-buttons">
                             <input type="submit" name="add_to_bag" value="Add to Bag" class="btn btn-secondary"></input>
@@ -249,14 +249,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['select'])) {
                         </div>
                     </div>
                 </div>
-                        </form>
+                
+            </form>
             <?php
-            }
+            }  
             ?>
         </div>
     </div>
 
     <script src="app.js"></script>
+    <script src="lazyload.js"></script>
 </body>
 
 </html>
