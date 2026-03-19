@@ -359,6 +359,10 @@
                     return;
                 }
 
+                document.querySelectorAll('input[name="tip"]').forEach(other => {
+                    if (other !== this) other.checked = false;
+                });
+
                 let tipValue = this.value;
                     if (tipValue === 'custom') {
                         const current = document.getElementById('tips').dataset.tip || '';
