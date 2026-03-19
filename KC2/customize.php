@@ -258,7 +258,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['select'])) {
     </div>
 
     <script src="app.js"></script>
-    <script src="lazyload.js"></script>
 </body>
 
 </html>
