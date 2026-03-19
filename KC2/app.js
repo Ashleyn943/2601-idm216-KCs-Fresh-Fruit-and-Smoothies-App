@@ -280,7 +280,6 @@ function initCheckoutPage() {
 
             if (this.value === 'apple') {
                 document.getElementById('applePayModal').classList.add('active');
-                document.getElementById('confirm-pay-btn').removeAttribute('disabled');
             }
         });
     });
@@ -290,6 +289,12 @@ function initCheckoutPage() {
     if (applePayModal) {
         applePayModal.addEventListener('click', function (e) {
             if (e.target === this) this.classList.remove('active');
+            
+            const appleRadio = document.querySelector('input[name="payment"][value="apple"]');
+                if (appleRadio) {
+                    appleRadio.checked = false;
+                    appleRadio.closest('.radio-option').classList.remove('selected');
+                }
         });
     }
 
@@ -340,6 +345,19 @@ function initCheckoutPage() {
             this.classList.add('selected');
         });
     });
+
+    // ── Tips buttons: selecting only 1 option──
+    const tip_select = document.querySelectorAll('.tip-input');
+        tip_select.forEach(checkbox => {
+            checkbox.addEventListener('change', function () {
+                const checked = document.querySelectorAll('.tip-input:checked').length;
+                if (this.checked && checked > 1) {
+                    this.checked = false;
+                    return;
+                }
+                this.closest('.tip-button').classList.toggle('selected', this.checked);
+            });
+        });
 }
 
 

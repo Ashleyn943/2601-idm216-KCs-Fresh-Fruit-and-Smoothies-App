@@ -204,15 +204,15 @@
                 <label class="form-label">LEAVE A TIP FOR KC!</label>
                 <div class="tip-buttons">
                         <label class="tip-button">
-                            <input type="radio" name="tip" class="tip-input" id="custom" value="custom">
+                            <input type="checkbox" name="tip" class="tip-input" id="custom" value="custom">
                             Custom
                         </label>
                         <label class="tip-button">
-                            <input type="radio" name="tip" class="tip-input" value="15">
+                            <input type="checkbox" name="tip" class="tip-input" value="15">
                             15%
                         </label>
                         <label class="tip-button">
-                            <input type="radio" name="tip" class="tip-input" value="20">
+                            <input type="checkbox" name="tip" class="tip-input" value="20">
                             20%
                         </label>
                 </div>
@@ -326,7 +326,7 @@
             </div>
             <div class="payment-total-section">
                 <div class="payment-merchant">Pay KC's Fresh Fruit & Smoothies</div>
-                <div class="payment-amount">$0.00</div>
+                <div class="payment-amount"><?php echo '$' . number_format($total, 2); ?></div>
                 <span class="chevron-right">›</span>
             </div>
             <div class="confirm-section" id="applePayConfirm">
@@ -338,8 +338,27 @@
 
     <script src="app.js"></script>
     <script>
-        document.querySelectorAll('input[name="tip"]').forEach(radio => {
-            radio.addEventListener('change', function () {
+        document.querySelectorAll('input[name="tip"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function () {
+                if (!this.checked) {
+                    //Unselecting tip/Reset tip to 0 
+                    const formData = new FormData();
+                    formData.append('tip', 0);
+                    fetch('', { method: 'POST', body: formData })
+                        .then(res => res.json())
+                        .then(data => {
+                            if (data.success) {
+                                document.getElementById('tips').textContent = '';
+                                document.getElementById('tips').dataset.tip = '';
+                                const subtotal = parseFloat(document.getElementById('summary-subtotal').dataset.subtotal);
+                                const tax = subtotal * 0.08;
+                                document.getElementById('summary-tip').textContent = '$0.00';
+                                document.getElementById('summary-total').textContent = '$' + (subtotal + tax).toFixed(2);
+                            }
+                        });
+                    return;
+                }
+
                 let tipValue = this.value;
                     if (tipValue === 'custom') {
                         const current = document.getElementById('tips').dataset.tip || '';
